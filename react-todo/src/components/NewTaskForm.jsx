@@ -20,12 +20,12 @@ export default function NewTaskForm(props) {
 
     return (
         <form onSubmit={handleSubmit} className={"w-full flex flex-col items-center justify-center gap-4"}>
-            <label className={"w-full p-2 bg-white border border-border rounded-lg shadow-sm"}>
+            <label className={"w-full p-2 bg-white border border-border rounded-lg shadow-md"}>
                 <input id={"taskName"} name={"taskName"} type="text" className={"w-full focus:outline-none"}
                        placeholder={"Task Name"} autoComplete="off"/>
             </label>
 
-            <div className="w-full inline-flex rounded-md shadow-sm" role="group">
+            <div className="w-full inline-flex rounded-md shadow-md" role="group">
                 <label
                     className="w-1/3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-black focus:z-10 focus:ring-2 focus:ring-black focus:text-blue-700 flex items-center justify-center cursor-pointer">
                     <input type="radio" name="priority" value="High" className="accent-rose-300"/>

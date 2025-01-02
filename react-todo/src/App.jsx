@@ -1,12 +1,22 @@
-import { useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import { useState, useEffect } from "react";
 import NewTaskForm from "./components/NewTaskForm.jsx";
 import Task from "./components/Task.jsx";
+import DeleteAllBtn from "./components/DeleteAllBtn.jsx";
 import DeleteConfirmation from "./components/DeleteConfirmation.jsx";
 
 function App() {
     const taskLimit = 5
 
-    const [taskList, setTaskList] = useState([]);
+    const [taskList, setTaskList] = useState(() => {
+        const savedTasks = localStorage.getItem("taskList");
+        return savedTasks ? JSON.parse(savedTasks) : [];
+    });
+
+    useEffect(() => {
+        localStorage.setItem("taskList", JSON.stringify(taskList));
+    }, [taskList]);
+
     // Under development const [deleteTask, setDeleteTask] = useState(false);
 
     function addNewTask(taskName, taskPriority, taskStatus, taskId) {
@@ -28,9 +38,17 @@ function App() {
 
     function handleDelete(taskId) {
         // Under development setDeleteTask(!deleteTask);
+        toast.info("Task Deleted");
+
         setTaskList((prevTaskList) => {
             return prevTaskList.filter((task) => task.taskId !== taskId);
         });
+    }
+
+    function handleDeleteAll() {
+        toast.info("All Tasks Deleted");
+
+        setTaskList([])
     }
 
     /* Under development function handleDeleteConfirmed(taskId) {
@@ -49,19 +67,37 @@ function App() {
     ));
 
     return (
-        <main className="w-96 flex flex-col items-center justify-center gap-6">
-            <NewTaskForm addNewTask={addNewTask} />
+        <div className={"h-screen flex flex-col"}>
+            <main className="w-96 flex flex-col flex-grow items-center justify-center gap-6">
+                <header><h1 className={"text-3xl font-semibold"}>React Todo App</h1></header>
 
-            <div className="w-full border-b border-black"></div>
+                <NewTaskForm addNewTask={addNewTask}/>
 
-            <div className="w-full flex flex-col gap-2">
-                {taskElements}
-            </div>
+                <div className="w-full border-b border-black"></div>
 
-            {taskList.length === taskLimit && <p>You have reached task limit: {taskLimit} / {taskLimit}</p>}
-            {/* Under development deleteTask && <DeleteConfirmation handleDeleteConfirmed={handleDeleteConfirmed} /> */}
-        </main>
-    );
+                <div className="w-full flex flex-col gap-2">
+                    {taskElements}
+                </div>
+
+                <div className="w-full border-b border-black"></div>
+
+                <DeleteAllBtn handleDeleteAll={handleDeleteAll}/>
+
+                {taskList.length === taskLimit && <p>You have reached task limit: {taskLimit} / {taskLimit}</p>}
+                {/* Under development deleteTask && <DeleteConfirmation handleDeleteConfirmed={handleDeleteConfirmed} /> */}
+
+                <ToastContainer
+                    position={"top-center"}
+                    hideProgressBar={true}
+                />
+            </main>
+
+            <footer>
+                <p className={"text-xs text-center mb-4"}>By Bedirhan KURT</p>
+            </footer>
+        </div>
+)
+    ;
 }
 
 export default App;
