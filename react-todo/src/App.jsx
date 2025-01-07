@@ -1,103 +1,94 @@
-import { ToastContainer, toast } from 'react-toastify';
-import { useState, useEffect } from "react";
+import {ToastContainer, toast} from 'react-toastify';
+import {useState, useEffect, createContext, useContext} from "react";
 import NewTaskForm from "./components/NewTaskForm.jsx";
 import Task from "./components/Task.jsx";
 import DeleteAllBtn from "./components/DeleteAllBtn.jsx";
-import DeleteConfirmation from "./components/DeleteConfirmation.jsx";
+import FunctionsForm from "./components/FunctionsForm.jsx";
+import DarkModeToggle from "./components/DarkModeToggle.jsx";
+import ProgressBar from "./components/ProgressBar.jsx";
+import MainMenu from "./components/MainMenu.jsx";
 
 function App() {
-    const taskLimit = 5
+    let [allFormsVisibility, setAllFormsVisibility] = useState([0, 0]);
+
+    function toggleAllFormsVisibility(newAllFormsVisibility) {
+        setAllFormsVisibility(newAllFormsVisibility)
+        console.log(newAllFormsVisibility)
+    }
+
+    const taskLimit = 10
+
+    let [darkMode, setDarkMode] = useState(() => {
+        const darkModePref = localStorage.getItem("darkMode");
+        console.log(darkModePref);
+        return darkModePref ? JSON.parse(darkModePref) : "";
+    })
+    console.log(darkMode)
+
+    function toggleDarkMode() {
+        setDarkMode((darkMode) => !darkMode);
+    }
 
     const [taskList, setTaskList] = useState(() => {
         const savedTasks = localStorage.getItem("taskList");
         return savedTasks ? JSON.parse(savedTasks) : [];
     });
 
+    const [processedTasks, setProcessedTasks] = useState("");
+
     useEffect(() => {
         localStorage.setItem("taskList", JSON.stringify(taskList));
-    }, [taskList]);
+        localStorage.setItem("darkMode", darkMode);
+    }, [taskList, darkMode]);
 
-    // Under development const [deleteTask, setDeleteTask] = useState(false);
-
-    function addNewTask(taskName, taskPriority, taskStatus, taskId) {
-        if (taskList.length < taskLimit) {
-            setTaskList([...taskList, {taskName, taskPriority, taskStatus, taskId}]);
-        }
+    function resetFilters() {
+        setProcessedTasks("");
     }
 
-    function handleStatusChange(taskId, newStatus) {
-        setTaskList((prevTaskList) => {
-            const newTaskList = prevTaskList.map((task) => {
-                return task.taskId === taskId
-                    ? {...task, taskStatus: newStatus}
-                    : task;
-            });
-            return ([...newTaskList])
-        });
-    }
-
-    function handleDelete(taskId) {
-        // Under development setDeleteTask(!deleteTask);
-        toast.info("Task Deleted");
-
-        setTaskList((prevTaskList) => {
-            return prevTaskList.filter((task) => task.taskId !== taskId);
-        });
-    }
-
-    function handleDeleteAll() {
-        toast.info("All Tasks Deleted");
-
-        setTaskList([])
-    }
-
-    /* Under development function handleDeleteConfirmed(taskId) {
-        setTaskList((prevTaskList) => {
-            const newTaskList = prevTaskList.map((task) => {
-                return task.taskId === taskId
-                    ? null
-                    : task;
-            });
-            return ([...newTaskList])
-        });
-    } */
-
-    const taskElements = taskList.map(task => (
-        <Task key={task.taskId} id={task.taskId} name={task.taskName} priority={task.taskPriority} status={task.taskStatus} handleStatusChange={handleStatusChange} handleDelete={handleDelete} />
+    const renderList = processedTasks ? processedTasks : taskList
+    const taskElements = renderList.map(task => (
+        <Task key={task.taskId} id={task.taskId} name={task.taskName} priority={task.taskPriority}
+              status={task.taskStatus} taskList={taskList} setTaskList={setTaskList}/>
     ));
 
     return (
         <div className={"h-screen flex flex-col"}>
-            <main className="w-96 flex flex-col flex-grow items-center justify-center gap-6">
-                <header><h1 className={"text-3xl font-semibold"}>React Todo App</h1></header>
+            <main className="w-96 flex flex-col flex-grow items-center justify-center gap-4">
+                <DarkModeToggle toggleDarkMode={() => toggleDarkMode}/>
+                <header><h1 className={"text-3xl font-semibold dark:text-white"}>React Todo App</h1></header>
 
-                <NewTaskForm addNewTask={addNewTask}/>
+                <MainMenu taskLimit={taskLimit} taskList={taskList} setTaskList={setTaskList}
+                          setProcessedTasks={setProcessedTasks} resetFilters={resetFilters} processedTasks={processedTasks}/>
 
-                <div className="w-full border-b border-black"></div>
+                <div className="w-full border-b border-black dark:border-gray-700"></div>
 
                 <div className="w-full flex flex-col gap-2">
+                    <ProgressBar taskCount={taskList.length}
+                                 completedTaskCount={taskList.filter(task => task.taskStatus === true).length}/>
+
                     {taskElements}
                 </div>
 
-                <div className="w-full border-b border-black"></div>
+                {taskList.length > 0 && <div className="w-full border-b border-black dark:border-gray-700"></div>}
 
-                <DeleteAllBtn handleDeleteAll={handleDeleteAll}/>
+                <DeleteAllBtn taskList={taskList} setTaskList={setTaskList} setProcessedTasks={setProcessedTasks}/>
 
-                {taskList.length === taskLimit && <p>You have reached task limit: {taskLimit} / {taskLimit}</p>}
-                {/* Under development deleteTask && <DeleteConfirmation handleDeleteConfirmed={handleDeleteConfirmed} /> */}
+                {taskList.length === taskLimit &&
+                    <p className={"dark:text-gray-300"}>You have reached task limit: {taskLimit} / {taskLimit}</p>}
 
                 <ToastContainer
                     position={"top-center"}
                     hideProgressBar={true}
+                    limit={2}
+                    theme={"dark"}
                 />
             </main>
 
             <footer>
-                <p className={"text-xs text-center mb-4"}>By Bedirhan KURT</p>
+                <p className={"text-xs text-center mb-4 dark:text-gray-300"}>By Bedirhan KURT</p>
             </footer>
         </div>
-)
-    ;
+    );
 }
 
 export default App;
