@@ -20,10 +20,8 @@ function App() {
 
     let [darkMode, setDarkMode] = useState(() => {
         const darkModePref = localStorage.getItem("darkMode");
-        console.log(darkModePref);
         return darkModePref ? JSON.parse(darkModePref) : "";
     })
-    console.log(darkMode)
 
     function toggleDarkMode() {
         setDarkMode((darkMode) => !darkMode);
