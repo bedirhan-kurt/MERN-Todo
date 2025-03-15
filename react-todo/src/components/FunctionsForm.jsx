@@ -86,8 +86,8 @@ export default function FunctionsForm({resetFilters, taskList, processedTasks, s
                         <option value="sort" disabled>
                             Sort
                         </option>
-                        <option value="LtN">Latest to Newest</option>
-                        <option value="NtL">Newest to Latest</option>
+                        <option value="OtL">Oldest to Latest</option>
+                        <option value="LtO">Latest to Oldest</option>
                         <option value="HtL">High to Low Priority</option>
                         <option value="LtH">Low to High Priority</option>
                     </select>
