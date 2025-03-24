@@ -12,8 +12,8 @@ export default function TodoList() {
                     taskId={todo.id}
                     taskName={todo.taskName}
                     taskDescription={todo.taskDescription}
-                    taskDueDate={todo.dueDate}
-                    taskPriority={todo.priority}
+                    taskDueDate={todo.taskDueDate}
+                    taskPriority={todo.taskPriority}
                 />
             ))}
         </div>

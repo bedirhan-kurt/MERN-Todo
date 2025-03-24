@@ -16,14 +16,14 @@ import {
 import {useModal} from "@/hooks/useModal.tsx";
 
 export default function TaskCard({taskId, taskName, taskDescription, taskPriority, taskDueDate}: {taskId: number, taskName: string, taskDescription?: string, taskPriority?: string, taskDueDate?: Date}) {
-    const {deleteTodo} = useTodo();
+    const {deleteTodo, updateStatus} = useTodo();
     const {setActiveModal, setTaskInfo} = useModal();
 
     const priorityEmoji = taskPriority === "high" ? "🔴" : taskPriority === "medium" ? "🟡" : taskPriority === "medium" ? "🟢" : null;
 
     return (
-        <Card className="w-[400px] flex flex-col gap-4">
-            <CardHeader className="flex flex-col gap-4">
+        <Card className=" flex flex-col gap-4 p-4">
+            <CardHeader className="flex flex-col gap-4 p-0">
                 <div className="w-full flex justify-between">
                     <CardTitle>{priorityEmoji} {taskName}</CardTitle>
                     <span className="flex gap-1 items-center text-xs">
@@ -33,15 +33,15 @@ export default function TaskCard({taskId, taskName, taskDescription, taskPriorit
                 </div>
                 {taskDescription ? <CardDescription className="flex-wrap">{taskDescription}</CardDescription> : null}
             </CardHeader>
-            <CardContent className="flex gap-2">
-                <Select>
+            <CardContent className="flex gap-2 p-0">
+                <Select defaultValue={"in_progress"} onValueChange={(value) => updateStatus(taskId, value)}>
                         <SelectTrigger className="w-full">
                             <SelectValue placeholder="Select priority lvl"/>
                         </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="high">In progress</SelectItem>
-                        <SelectItem value="medium">Completed</SelectItem>
-                        <SelectItem value="low">Issue detected</SelectItem>
+                        <SelectItem value="in_progress">In progress</SelectItem>
+                        <SelectItem value="completed">Completed</SelectItem>
+                        <SelectItem value="issue_detected">Issue detected</SelectItem>
                     </SelectContent>
                 </Select>
                 <DropdownMenu>
