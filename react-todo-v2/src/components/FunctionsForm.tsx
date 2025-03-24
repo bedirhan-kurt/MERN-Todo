@@ -143,7 +143,7 @@ export default function FunctionsForm() {
                             </div>
 
                         </div>
-                        <Button type="submit" className="w-full">Submit</Button>
+                        <Button type="submit" className="w-full">Apply</Button>
                     </form>
                 </Form>
             </CardContent>

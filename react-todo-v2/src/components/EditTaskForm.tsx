@@ -6,6 +6,9 @@ import {
     useForm
 } from "react-hook-form"
 import {
+    useTodo
+} from "../hooks/useTodo.tsx"
+import {
     zodResolver
 } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -51,31 +54,35 @@ import {
 import {
     Calendar as CalendarIcon
 } from "lucide-react"
+import {useModal} from "@/hooks/useModal.tsx";
 
 const formSchema = z.object({
     taskName: z.string().min(1).max(24),
     taskDescription: z.string().min(1).max(120).optional(),
-    priority: z.string(),
-    dueDate: z.coerce.date().optional()
-});
+    taskPriority: z.string(),
+    taskDueDate: z.coerce.date().optional()
+})
 
-export default function MyForm() {
+export function EditTaskForm() {
+    const { updateTodo } = useTodo();
+    const { taskInfo, setActiveModal } = useModal();
 
+    console.log(taskInfo)
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            "dueDate": new Date()
+            taskName: taskInfo?.taskName,
+            taskDescription: taskInfo?.taskDescription,
+            taskPriority: taskInfo?.taskPriority,
+            taskDueDate: taskInfo?.taskDueDate
         },
     })
 
     function onSubmit(values: z.infer<typeof formSchema>) {
         try {
-            console.log(values);
-            toast(
-                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>
-            );
+            updateTodo(taskInfo.taskId, values.taskName, values.taskDescription, values.taskPriority, values.taskDueDate);
+            setActiveModal("newTaskModal");
+            toast.success("Task updated successfully");
         } catch (error) {
             console.error("Form submission error", error);
             toast.error("Failed to submit the form. Please try again.");
@@ -95,6 +102,7 @@ export default function MyForm() {
                                     <FormLabel>Task name</FormLabel>
                                     <FormControl>
                                         <Input
+                                            autoComplete="off"
                                             placeholder="Check e-mails"
                                             type="text"
                                             {...field} />
@@ -112,6 +120,7 @@ export default function MyForm() {
                                     <FormLabel>Task description</FormLabel>
                                     <FormControl>
                                         <Input
+                                            autoComplete="off"
                                             placeholder="Read all e-mails and reply important ones."
 
                                             type="text"
@@ -127,7 +136,7 @@ export default function MyForm() {
                             <div className="w-1/2">
                                 <FormField
                                     control={form.control}
-                                    name="priority"
+                                    name="taskPriority"
                                     render={({field}) => (
                                         <FormItem>
                                             <FormLabel>Priority</FormLabel>
@@ -152,7 +161,7 @@ export default function MyForm() {
                             <div className="w-1/2">
                                 <FormField
                                     control={form.control}
-                                    name="dueDate"
+                                    name="taskDueDate"
                                     render={({field}) => (
                                         <FormItem className="flex flex-col">
                                             <FormLabel>Due date</FormLabel>
@@ -191,7 +200,10 @@ export default function MyForm() {
                             </div>
                         </div>
 
-                        <Button type="submit" className="w-full">Add</Button>
+                        <div className="flex w-full justify-end gap-4">
+                            <Button type="button" onClick={() => {setActiveModal("newTaskModal")}} variant="outline" className="w-24">Cancel</Button>
+                            <Button type="submit" className="w-24">Save</Button>
+                        </div>
                     </form>
                 </Form>
             </CardContent>
