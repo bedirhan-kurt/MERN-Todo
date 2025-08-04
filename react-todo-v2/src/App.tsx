@@ -1,10 +1,10 @@
-import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
-import FunctionsForm from "@/components/FunctionsForm.tsx";
-import TodoList from "@/components/TodoList.tsx";
-import {TodoProvider} from "@/hooks/useTodo.tsx";
+import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/shared/components/ui/tabs.tsx";
+import FiltersDialog from "@/features/tasks-[page]/filter-tasks-[feat]/components/FiltersDialog.tsx";
+import TodoList from "@/features/tasks-[page]/get-tasks-[feat]/components/TodoList.tsx";
+import {TodoProvider} from "@/features/tasks-[page]/create-task-[feat]/hooks/useCreateTask.tsx";
 import {ModalProvider} from "@/hooks/useModal.tsx";
-import {ActiveModal} from "@/components/ActiveModal.tsx";
-import ProgressBar from "@/components/ProgressBar.tsx";
+import {ActiveModal} from "@/shared/components/ActiveModal.tsx";
+import ProgressBar from "@/features/tasks-[page]/progress-bar-[feat]/components/ProgressBar.tsx";
 
 function App() {
     return (
@@ -21,7 +21,7 @@ function App() {
                             <ProgressBar></ProgressBar>
                         </div>
                     </TabsContent>
-                    <TabsContent value="functions"><FunctionsForm/></TabsContent>
+                    <TabsContent value="functions"><FiltersDialog/></TabsContent>
                     <TodoList/>
                 </Tabs>
             </TodoProvider>
