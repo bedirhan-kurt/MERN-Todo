@@ -1,7 +1,7 @@
 import * as React from "react"
 import * as PopoverPrimitive from "@radix-ui/react-popover"
 
-import { cn } from "todo-app/front-end/src/shared/lib/utils.ts"
+import {cn} from "../../lib/utils.ts";
 
 function Popover({
   ...props

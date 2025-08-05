@@ -1,23 +1,17 @@
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "todo-app/front-end/src/shared/components/ui/card.tsx"
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "front-end/src/shared/components/ui/card";
+import {useCreateTask} from "../../tasks-[page]/get-tasks-[feat]/hooks/useGetTasks.tsx";
 import {EllipsisVertical, Timer} from "lucide-react";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "todo-app/front-end/src/shared/components/ui/select.tsx";
-import {useCreateTask} from "todo-app/front-end/src/features/tasks-[page]/create-task-[feat]/hooks/useCreateTask.tsx";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../../../shared/components/ui/select.tsx";
 import {
     DropdownMenu,
-    DropdownMenuContent, DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "todo-app/front-end/src/shared/components/ui/dropdown-menu.tsx"
-import {useModal} from "@/hooks/useModal.tsx";
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger
+} from "../../../shared/components/ui/dropdown-menu.tsx";
+
 
 export default function TaskCard({taskId, taskName, taskDescription, taskPriority, taskDueDate}: {taskId: number, taskName: string, taskDescription?: string, taskPriority?: string, taskDueDate?: Date}) {
     const {deleteTodo, updateStatus} = useCreateTask();
-    const {setActiveModal, setTaskInfo} = useModal();
 
     const priorityEmoji = taskPriority === "high" ? "🔴" : taskPriority === "medium" ? "🟡" : taskPriority === "medium" ? "🟢" : null;
 
@@ -48,8 +42,7 @@ export default function TaskCard({taskId, taskName, taskDescription, taskPriorit
                     <DropdownMenuTrigger><EllipsisVertical /></DropdownMenuTrigger>
                     <DropdownMenuContent>
                         <DropdownMenuItem onClick={() => {
-                            setActiveModal("editModal")
-                            setTaskInfo({taskId, taskName, taskDescription, taskPriority, taskDueDate})
+                            console.log('testing taskCard')
                         }}>Edit</DropdownMenuItem>
                         <DropdownMenuItem>Favorite</DropdownMenuItem>
                         <DropdownMenuItem onClick={() => {deleteTodo(taskId)}}>Delete</DropdownMenuItem>

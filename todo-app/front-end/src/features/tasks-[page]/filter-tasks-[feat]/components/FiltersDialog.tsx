@@ -3,34 +3,24 @@ import {
     toast
 } from "sonner"
 import {
+    Form,
     useForm
 } from "react-hook-form"
 import {
     zodResolver
 } from "@hookform/resolvers/zod"
 import * as z from "zod"
-import {
-    Button
-} from "todo-app/front-end/src/shared/components/ui/button.tsx"
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "todo-app/front-end/src/shared/components/ui/form.tsx"
-import {
-    Input
-} from "todo-app/front-end/src/shared/components/ui/input.tsx"
+import {Card, CardContent} from "front-end/src/shared/components/ui/card.tsx"
+import {FormControl, FormField, FormItem, FormLabel, FormMessage} from "front-end/src/shared/components/ui/form.tsx"
+import {Input} from "../../../../shared/components/ui/input.tsx";
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue
-} from "todo-app/front-end/src/shared/components/ui/select.tsx"
-import {Card, CardContent} from "todo-app/front-end/src/shared/components/ui/card.tsx";
+} from "../../../../shared/components/ui/select.tsx";
+import {Button} from "../../../../shared/components/ui/button.tsx";
 
 const formSchema = z.object({
     search: z.string().optional(),

@@ -3,6 +3,7 @@ import {
     toast
 } from "sonner"
 import {
+    Form,
     useForm
 } from "react-hook-form"
 import {
@@ -13,47 +14,25 @@ import {
 } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import {
-    cn
-} from "todo-app/front-end/src/shared/lib/utils.ts"
+    format
+} from "date-fns"
 import {
-    Button
-} from "todo-app/front-end/src/shared/components/ui/button.tsx"
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "todo-app/front-end/src/shared/components/ui/form.tsx"
-import {
-    Card,
-    CardContent,
-} from "todo-app/front-end/src/shared/components/ui/card.tsx"
-import {
-    Input
-} from "todo-app/front-end/src/shared/components/ui/input.tsx"
+    Calendar as CalendarIcon
+} from "lucide-react"
+import {Card, CardContent} from "front-end/src/shared/components/ui/card.tsx"
+import {FormControl, FormField, FormItem, FormLabel, FormMessage} from "front-end/src/shared/components/ui/form.tsx"
+import {Input} from "../../../../shared/components/ui/input.tsx";
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue
-} from "todo-app/front-end/src/shared/components/ui/select.tsx"
-import {
-    format
-} from "date-fns"
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger
-} from "todo-app/front-end/src/shared/components/ui/popover.tsx"
-import {
-    Calendar
-} from "todo-app/front-end/src/shared/components/ui/calendar.tsx"
-import {
-    Calendar as CalendarIcon
-} from "lucide-react"
+} from "../../../../shared/components/ui/select.tsx";
+import {Popover, PopoverContent, PopoverTrigger} from "../../../../shared/components/ui/popover.tsx";
+import {Button} from "../../../../shared/components/ui/button.tsx";
+import {cn} from "../../../../shared/lib/utils.ts";
+import {Calendar} from "../../../../shared/components/ui/calendar.tsx";
 
 const formSchema = z.object({
     taskName: z.string().min(1).max(24),

@@ -1,6 +1,6 @@
 import * as React from "react"
 
-import { cn } from "todo-app/front-end/src/shared/lib/utils.ts"
+import {cn} from "../../lib/utils.ts";
 
 function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   return (

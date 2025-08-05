@@ -11,8 +11,9 @@ import {
   type FieldValues,
 } from "react-hook-form"
 
-import { cn } from "todo-app/front-end/src/shared/lib/utils.ts"
-import { Label } from "todo-app/front-end/src/shared/components/ui/label.tsx"
+import {cn} from "../../lib/utils.ts";
+import { Label } from "./label.tsx";
+
 
 const Form = FormProvider
 

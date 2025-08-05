@@ -3,58 +3,34 @@ import {
     toast
 } from "sonner"
 import {
+    Form,
     useForm
 } from "react-hook-form"
-import {
-    useCreateTask
-} from "../../create-task-[feat]/hooks/useCreateTask.tsx"
 import {
     zodResolver
 } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import {
-    cn
-} from "todo-app/front-end/src/shared/lib/utils.ts"
+    format
+} from "date-fns"
 import {
-    Button
-} from "todo-app/front-end/src/shared/components/ui/button.tsx"
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "todo-app/front-end/src/shared/components/ui/form.tsx"
-import {
-    Card,
-    CardContent,
-} from "todo-app/front-end/src/shared/components/ui/card.tsx"
-import {
-    Input
-} from "todo-app/front-end/src/shared/components/ui/input.tsx"
+    Calendar as CalendarIcon
+} from "lucide-react"
+import {Card, CardContent} from "front-end/src/shared/components/ui/card.tsx"
+import {FormControl, FormField, FormItem, FormLabel, FormMessage} from "front-end/src/shared/components/ui/form.tsx"
+import {Input} from "../../../../shared/components/ui/input.tsx";
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue
-} from "todo-app/front-end/src/shared/components/ui/select.tsx"
-import {
-    format
-} from "date-fns"
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger
-} from "todo-app/front-end/src/shared/components/ui/popover.tsx"
-import {
-    Calendar
-} from "todo-app/front-end/src/shared/components/ui/calendar.tsx"
-import {
-    Calendar as CalendarIcon
-} from "lucide-react"
-import {useModal} from "@/hooks/useModal.tsx";
+} from "../../../../shared/components/ui/select.tsx";
+import {Popover, PopoverContent, PopoverTrigger} from "../../../../shared/components/ui/popover.tsx";
+import {Button} from "../../../../shared/components/ui/button.tsx";
+import {cn} from "../../../../shared/lib/utils.ts";
+import {Calendar} from "../../../../shared/components/ui/calendar.tsx";
+import {useEditTask} from "../hooks/useEditTask.tsx";
 
 const formSchema = z.object({
     taskName: z.string().min(1).max(24),
@@ -63,11 +39,17 @@ const formSchema = z.object({
     taskDueDate: z.coerce.date().optional()
 })
 
-export function EditTaskDialog() {
-    const { updateTodo } = useCreateTask();
-    const { taskInfo, setActiveModal } = useModal();
+export function EditTaskDialog({...taskInfo}: {
+    taskId: number;
+    taskName: string;
+    taskDescription?: string;
+    taskPriority?: string;
+    taskDueDate?: Date;
+    taskStatus?: string;
 
-    console.log(taskInfo)
+}) {
+    const { updateTodo } = useEditTask();
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -81,7 +63,6 @@ export function EditTaskDialog() {
     function onSubmit(values: z.infer<typeof formSchema>) {
         try {
             updateTodo(taskInfo.taskId, values.taskName, values.taskDescription, values.taskPriority, values.taskDueDate);
-            setActiveModal("newTaskModal");
             toast.success("Task updated successfully");
         } catch (error) {
             console.error("Form submission error", error);
@@ -201,7 +182,7 @@ export function EditTaskDialog() {
                         </div>
 
                         <div className="flex w-full justify-end gap-4">
-                            <Button type="button" onClick={() => {setActiveModal("newTaskModal")}} variant="outline" className="w-24">Cancel</Button>
+                            <Button type="button" onClick={() => {console.log('test')}} variant="outline" className="w-24">Cancel</Button>
                             <Button type="submit" className="w-24">Save</Button>
                         </div>
                     </form>
