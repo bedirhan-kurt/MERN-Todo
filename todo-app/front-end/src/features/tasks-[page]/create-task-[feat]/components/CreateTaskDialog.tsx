@@ -9,8 +9,8 @@ import {
     zodResolver
 } from "@hookform/resolvers/zod"
 import * as z from "zod"
-import {Input} from "../../../../shared/components/ui/input.tsx";
-import {Button} from "../../../../shared/components/ui/button.tsx";
+import { Input } from "../../../../shared/components/ui/input.tsx";
+import { Button } from "../../../../shared/components/ui/button.tsx";
 import {
     Dialog, DialogClose,
     DialogContent, DialogDescription,
@@ -18,43 +18,49 @@ import {
     DialogHeader, DialogTitle,
     DialogTrigger
 } from "../../../../shared/components/ui/dialog.tsx";
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "../../../../shared/components/ui/form.tsx";
-import {Tabs, TabsList, TabsTrigger} from "../../../../shared/components/ui/tabs.tsx";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../../../shared/components/ui/form.tsx";
+import { Tabs, TabsList, TabsTrigger } from "../../../../shared/components/ui/tabs.tsx";
+import useCreateTask from "../hooks/useCreateTask.ts"
+import { useAuth0 } from "@auth0/auth0-react"
 
 const formSchema = z.object({
-    taskName: z.string().min(1).max(24),
-    taskDescription: z.string().min(1).max(120).optional(),
-    priority: z.string(),
+    name: z.string().min(1).max(24),
+    description: z.string().min(1).max(120).optional(),
+    priority: z.enum(['low', 'medium', 'high']),
 });
 
 export default function CreateTaskDialog() {
+    const { createTask } = useCreateTask();
+    const { user, getAccessTokenSilently } = useAuth0();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            taskName: "",
-            taskDescription: "",
+            name: "",
+            description: "",
             priority: "medium",
         },
     })
 
     function clearForm() {
         form.reset({
-            taskName: "",
-            taskDescription: "",
+            name: "",
+            description: "",
             priority: "medium",
         });
     }
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
+    async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
-            console.log(values.taskName, values.taskDescription, values.priority);
+            if (!user || !user.sub) {
+                throw new Error("User ID is not available");
+            }
+
+            const token = await getAccessTokenSilently();
+
+            createTask({ ...values, status: 'inProgress' }, user?.sub, token);
+
             clearForm();
-            toast(
-                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                    <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-                </pre>
-            );
         } catch (error) {
             console.error("Form submission error", error);
             toast.error("Failed to submit the form. Please try again.");
@@ -77,8 +83,8 @@ export default function CreateTaskDialog() {
                     <div className="w-full h-full flex flex-col gap-4">
                         <FormField
                             control={form.control}
-                            name="taskName"
-                            render={({field}) => (
+                            name="name"
+                            render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Task name</FormLabel>
                                     <FormControl>
@@ -88,14 +94,14 @@ export default function CreateTaskDialog() {
                                             type="text"
                                             {...field} />
                                     </FormControl>
-                                    <FormMessage/>
+                                    <FormMessage />
                                 </FormItem>
                             )}
                         />
                         <FormField
                             control={form.control}
-                            name="taskDescription"
-                            render={({field}) => (
+                            name="description"
+                            render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Task description</FormLabel>
                                     <FormControl>
@@ -105,7 +111,7 @@ export default function CreateTaskDialog() {
                                             type="text"
                                             {...field} />
                                     </FormControl>
-                                    <FormMessage/>
+                                    <FormMessage />
                                 </FormItem>
                             )}
                         />

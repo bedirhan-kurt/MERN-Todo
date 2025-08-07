@@ -18,14 +18,19 @@ const getSingleTask = asyncWrapper(async (req, res, next) => {
     res.json(req.body);
 })
 
-const createTask = asyncWrapper (async (req, res) => {
-    const task = await Task.create(req.body);
-    res.status(201).json({ task });
+const createTask = asyncWrapper(async (req, res) => {
+    const { userId, name, description, priority, status } = req.body;
+    console.log('Received task data:', req.body);
+
+    const task = new Task({ userId, name, description, priority, status });
+    await task.save();
+
+    res.status(201).json({ success: true, task });
 })
 
 const updateTask = asyncWrapper(async (req, res, next) => {
-    const {id: taskID} = req.params;
-    const task = await Task.findOneAndUpdate({_id: taskID}, req.body, {
+    const { id: taskID } = req.params;
+    const task = await Task.findOneAndUpdate({ _id: taskID }, req.body, {
         new: true,
         runValidators: true
     });

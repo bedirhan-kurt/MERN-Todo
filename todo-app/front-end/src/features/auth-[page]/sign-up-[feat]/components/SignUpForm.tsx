@@ -1,15 +1,15 @@
-import {Button} from "../../../../shared/components/ui/button.tsx";
-import {Label} from "../../../../shared/components/ui/label.tsx";
-import {Input} from "../../../../shared/components/ui/input.tsx";
+import { Button } from "../../../../shared/components/ui/button.tsx";
+import { Label } from "../../../../shared/components/ui/label.tsx";
+import { Input } from "../../../../shared/components/ui/input.tsx";
 import * as React from "react";
-import {cn} from "../../../../shared/lib/utils.ts";
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "../../../../shared/components/ui/card.tsx";
+
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../../../shared/components/ui/card.tsx";
 export function SignUpForm({
-                               className,
-                               ...props
-                           }: React.ComponentProps<"div">) {
+    className,
+    ...props
+}: React.ComponentProps<"div">) {
     return (
-        <div className={cn("flex flex-col gap-6", className)} {...props}>
+        <div className={"flex flex-col gap-6"} {...props}>
             <Card>
                 <CardHeader className="text-center">
                     <CardTitle className="text-xl">Welcome to TaskFlow!</CardTitle>

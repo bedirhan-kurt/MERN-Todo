@@ -1,4 +1,4 @@
-import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "../shared/components/ui/card.tsx";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../shared/components/ui/card.tsx";
 import { Separator } from "../shared/components/ui/separator.tsx";
 import NoTasks from "../features/tasks-[page]/[page-core]/components/NoTasks.tsx";
 import CreateTaskDialog from "../features/tasks-[page]/create-task-[feat]/components/CreateTaskDialog.tsx";
@@ -16,7 +16,7 @@ export default function TasksPage() {
                     <NoTasks></NoTasks>
                 </CardContent>
                 <CardFooter>
-                    <CreateTaskDialog className='w-full'></CreateTaskDialog>
+                    <CreateTaskDialog></CreateTaskDialog>
                 </CardFooter>
             </Card>
         </div>
