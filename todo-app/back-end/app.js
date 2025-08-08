@@ -21,7 +21,7 @@ app.use(cors({
 }));
 
 // Routes
-app.use('/api/v1/tasks', checkJwt, tasks)
+app.use('/api/v1/tasks', requestLogger, checkJwt, tasks)
 
 // Error Middleware
 app.use(notFound)

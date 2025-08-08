@@ -5,7 +5,6 @@ const createCustomError = require('../errors/customAPIError');
 const getAllTasks = asyncWrapper(async (req, res) => {
     const tasks = await Task.find({});
     res.status(200).json({ tasks });
-    res.json(req.body);
 })
 
 const getSingleTask = asyncWrapper(async (req, res, next) => {
