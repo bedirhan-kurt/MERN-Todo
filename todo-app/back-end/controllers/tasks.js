@@ -39,6 +39,23 @@ const updateTask = asyncWrapper(async (req, res, next) => {
     res.status(200).json({ task });
 })
 
+const updateTaskStatus = asyncWrapper(async (req, res, next) => {
+    const { id: taskId } = req.params;
+    const { newStatus } = req.body;
+
+    const updatedTask = await Task.findByIdAndUpdate(
+        taskId,
+        { status: newStatus },
+        { new: true }
+    );
+
+    if (!updatedTask) {
+        return next(createCustomError('Task not found', 404));
+    }
+
+    res.status(200).json({ updatedTask, message: 'Task status updated successfully' });
+})
+
 const deleteTask = asyncWrapper(async (req, res, next) => {
     const { id: taskID } = req.params;
     const task = await Task.findOneAndDelete({ _id: taskID });
@@ -53,5 +70,6 @@ module.exports = {
     getSingleTask,
     createTask,
     updateTask,
+    updateTaskStatus,
     deleteTask
 }

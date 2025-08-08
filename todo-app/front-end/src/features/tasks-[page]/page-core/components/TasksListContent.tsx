@@ -27,7 +27,6 @@ export default function TasksListContent() {
         };
 
         fetchData();
-        console.log(tasks)
     }, []);
 
     return(

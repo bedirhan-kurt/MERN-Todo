@@ -1,7 +1,7 @@
 import { Card, CardTitle, CardDescription } from "../../../../shared/components/ui/card";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../../../../shared/components/ui/select";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "../../../../shared/components/ui/dropdown-menu";
-import {Check, EllipsisVertical, Hourglass, CircleAlert} from "lucide-react";
+import { EllipsisVertical} from "lucide-react";
+import StatusSelect from "../../update-task-status-[feat]/components/StatusSelect";
 
 export default function TaskCard(
     {
@@ -21,23 +21,12 @@ export default function TaskCard(
 
     const borderColor = priority === "high" ? "border-l-red-500" : priority === "medium" ? "border-l-yellow-500" : priority === "low" ? "border-l-green-500" : "black";
 
+    console.log(id)
     return (
         <Card className={`w-full h-fit flex flex-row justify-between items-center gap-4 p-3 border-l-4 ${borderColor}`}>
             <div className='w-fit flex flex-row justify-start items-center gap-4'>
                 <div className='w-fit'>
-                    <Select defaultValue={status} onValueChange={(value: 'inProgress' | 'completed' | 'blocked') => {
-                        console.log(`Status changed to: ${value}`);
-                        // updateStatus(id, value);
-                    }}>
-                        <SelectTrigger className='text-black'>
-                            <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="inProgress"><Hourglass className={'text-black'}></Hourglass></SelectItem>
-                            <SelectItem value="completed"><Check className={'text-black'}></Check></SelectItem>
-                            <SelectItem value="blocked"><CircleAlert className={'text-black'}></CircleAlert></SelectItem>
-                        </SelectContent>
-                    </Select>
+                    <StatusSelect taskId={id} status={status}></StatusSelect>
                 </div>
                 <div className="w-fit flex-col justify-start items-center gap-4">
                     <CardTitle>{name}</CardTitle>
