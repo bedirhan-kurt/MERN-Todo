@@ -2,6 +2,7 @@ import { Card, CardTitle, CardDescription } from "../../../../shared/components/
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "../../../../shared/components/ui/dropdown-menu";
 import { EllipsisVertical} from "lucide-react";
 import StatusSelect from "../../update-task-status-[feat]/components/StatusSelect";
+import DeleteTaskAlertDialog from "../../delete-task-[feat]/components/DeleteTaskAlertDialog";
 
 export default function TaskCard(
     {
@@ -41,7 +42,9 @@ export default function TaskCard(
                             console.log('testing taskCard')
                         }}>Edit</DropdownMenuItem>
                         <DropdownMenuItem>Favorite</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => { console.log(id) }}>Delete</DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                            <DeleteTaskAlertDialog taskId={id}></DeleteTaskAlertDialog>
+                        </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>

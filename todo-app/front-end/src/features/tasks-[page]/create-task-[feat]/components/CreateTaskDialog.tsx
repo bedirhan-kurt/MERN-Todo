@@ -1,7 +1,5 @@
 "use client"
-import {
-    toast
-} from "sonner"
+
 import {
     useForm
 } from "react-hook-form"
@@ -20,8 +18,7 @@ import {
 } from "../../../../shared/components/ui/dialog.tsx";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../../../shared/components/ui/form.tsx";
 import { Tabs, TabsList, TabsTrigger } from "../../../../shared/components/ui/tabs.tsx";
-import useCreateTask from "../hooks/useCreateTask.ts"
-import { useAuth0 } from "@auth0/auth0-react"
+import CreateTaskButton from "./CreateTaskButton";
 
 const formSchema = z.object({
     name: z.string().min(1).max(24),
@@ -30,9 +27,6 @@ const formSchema = z.object({
 });
 
 export default function CreateTaskDialog() {
-    const { createTask } = useCreateTask();
-    const { user, getAccessTokenSilently } = useAuth0();
-
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -48,23 +42,6 @@ export default function CreateTaskDialog() {
             description: "",
             priority: "medium",
         });
-    }
-
-    async function onSubmit(values: z.infer<typeof formSchema>) {
-        try {
-            if (!user || !user.sub) {
-                throw new Error("User ID is not available");
-            }
-
-            const token = await getAccessTokenSilently();
-
-            createTask({ ...values, status: 'inProgress' }, user?.sub, token);
-
-            clearForm();
-        } catch (error) {
-            console.error("Form submission error", error);
-            toast.error("Failed to submit the form. Please try again.");
-        }
     }
 
     return (
@@ -142,7 +119,7 @@ export default function CreateTaskDialog() {
                         <DialogClose asChild>
                             <Button variant="outline" onClick={clearForm}>Cancel</Button>
                         </DialogClose>
-                        <Button onClick={form.handleSubmit(onSubmit)}>Create Task</Button>
+                        <CreateTaskButton form={form} formSchema={formSchema} clearForm={clearForm}></CreateTaskButton>
                     </DialogFooter>
                 </Form>
             </DialogContent>
