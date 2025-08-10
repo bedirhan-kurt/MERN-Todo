@@ -1,4 +1,4 @@
-import TaskCard from "../../page-core/components/TaskCard";
+import TaskCard from "../../[page-core]/components/TaskCard";
 
 export default function TasksElements({tasks}: { tasks: any[] }) {
     return (

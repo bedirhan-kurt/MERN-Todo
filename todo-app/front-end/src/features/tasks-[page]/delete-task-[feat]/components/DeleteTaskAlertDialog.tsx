@@ -8,14 +8,16 @@ import { AlertDialog, AlertDialogTrigger, AlertDialogContent,
 import {Button} from "../../../../shared/components/ui/button";
 import { Trash } from "lucide-react";
 import DeleteTaskButton from "./DeleteTaskButton";
+import { useState } from "react";
 
 export default function DeleteTaskAlertDialog({taskId}: {taskId: string}) {
+    const [isOpen, setIsOpen] = useState(false);
+
     return (
-        <AlertDialog>
+        <AlertDialog open={isOpen}>
             <AlertDialogTrigger asChild>
-                <Button variant='ghost' className='p-2 w-full flex justify-start items-center'>
+                <Button variant='ghost' onClick={() => setIsOpen(true)} className='p-2 w-fit flex justify-start items-center hover:bg-red-100'>
                     <Trash className='size-3'></Trash>
-                    Delete
                 </Button>
             </AlertDialogTrigger>
             <AlertDialogContent >
@@ -27,9 +29,9 @@ export default function DeleteTaskAlertDialog({taskId}: {taskId: string}) {
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogCancel onClick={() => setIsOpen(false)}>Cancel</AlertDialogCancel>
                     <AlertDialogAction asChild>
-                        <DeleteTaskButton taskId={taskId}></DeleteTaskButton>
+                        <DeleteTaskButton taskId={taskId} closeAlertDialog={() => setIsOpen(false)}></DeleteTaskButton>
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>

@@ -1,12 +1,4 @@
 "use client"
-
-import {
-    useForm
-} from "react-hook-form"
-import {
-    zodResolver
-} from "@hookform/resolvers/zod"
-import * as z from "zod"
 import { Input } from "../../../../shared/components/ui/input.tsx";
 import { Button } from "../../../../shared/components/ui/button.tsx";
 import {
@@ -19,16 +11,21 @@ import {
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../../../shared/components/ui/form.tsx";
 import { Tabs, TabsList, TabsTrigger } from "../../../../shared/components/ui/tabs.tsx";
 import CreateTaskButton from "./CreateTaskButton";
-
-const formSchema = z.object({
-    name: z.string().min(1).max(24),
-    description: z.string().min(1).max(120).optional(),
-    priority: z.enum(['low', 'medium', 'high']),
-});
+import { useState } from "react";
+import { createAndEditFormSchema } from "../../[page-core]/utils/formSchemas.ts";
+import {
+    useForm
+} from "react-hook-form"
+import {
+    zodResolver
+} from "@hookform/resolvers/zod"
+import * as z from "zod"
 
 export default function CreateTaskDialog() {
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const [isOpen, setIsOpen] = useState(false);
+
+    const form = useForm<z.infer<typeof createAndEditFormSchema>>({
+        resolver: zodResolver(createAndEditFormSchema),
         defaultValues: {
             name: "",
             description: "",
@@ -37,17 +34,13 @@ export default function CreateTaskDialog() {
     })
 
     function clearForm() {
-        form.reset({
-            name: "",
-            description: "",
-            priority: "medium",
-        });
+        form.reset();
     }
 
     return (
-        <Dialog>
+        <Dialog open={isOpen} onOpenChange={clearForm}>
             <DialogTrigger className='w-full' asChild>
-                <Button className='w-full'>Create New Task</Button>
+                <Button className='w-full' onClick={() => setIsOpen(true)}>Create New Task</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
@@ -117,9 +110,9 @@ export default function CreateTaskDialog() {
 
                     <DialogFooter>
                         <DialogClose asChild>
-                            <Button variant="outline" onClick={clearForm}>Cancel</Button>
+                            <Button variant="outline" onClick={() => setIsOpen(false)}>Cancel</Button>
                         </DialogClose>
-                        <CreateTaskButton form={form} formSchema={formSchema} clearForm={clearForm}></CreateTaskButton>
+                        <CreateTaskButton form={form} formSchema={createAndEditFormSchema} closeDialog={() => setIsOpen(false)}></CreateTaskButton>
                     </DialogFooter>
                 </Form>
             </DialogContent>

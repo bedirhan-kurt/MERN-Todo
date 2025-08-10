@@ -6,7 +6,7 @@ import {
 import { Button } from "../../../../shared/components/ui/button.tsx";
 import { z } from "zod";
 
-export default function CreateTaskButton({form, formSchema, clearForm}: {form: any, formSchema: any, clearForm: () => void}) {
+export default function CreateTaskButton({form, formSchema, closeDialog}: {form: any, formSchema: any, closeDialog: () => void}) {
     const { createTask } = useCreateTask();
     const { user, getAccessTokenSilently } = useAuth0();
 
@@ -20,7 +20,7 @@ export default function CreateTaskButton({form, formSchema, clearForm}: {form: a
 
             createTask({ ...values, status: 'inProgress' }, user?.sub, token);
 
-            clearForm();
+            closeDialog();
         } catch (error) {
             console.error("Form submission error", error);
             toast.error("Failed to submit the form. Please try again.");

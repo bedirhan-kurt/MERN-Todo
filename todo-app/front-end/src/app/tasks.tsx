@@ -1,6 +1,6 @@
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../shared/components/ui/card.tsx";
 import { Separator } from "../shared/components/ui/separator.tsx";
-import TasksListContent from "../features/tasks-[page]/page-core/components/TasksListContent.tsx";
+import TasksListContent from "../features/tasks-[page]/[page-core]/components/TasksListContent.tsx";
 import CreateTaskDialog from "../features/tasks-[page]/create-task-[feat]/components/CreateTaskDialog.tsx";
 
 

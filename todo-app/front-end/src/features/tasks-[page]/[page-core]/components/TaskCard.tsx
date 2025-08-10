@@ -1,8 +1,7 @@
 import { Card, CardTitle, CardDescription } from "../../../../shared/components/ui/card";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "../../../../shared/components/ui/dropdown-menu";
-import { EllipsisVertical} from "lucide-react";
 import StatusSelect from "../../update-task-status-[feat]/components/StatusSelect";
 import DeleteTaskAlertDialog from "../../delete-task-[feat]/components/DeleteTaskAlertDialog";
+import { EditTaskDialog } from "../../edit-task-[feat]/components/EditTaskDialog";
 
 export default function TaskCard(
     {
@@ -18,11 +17,9 @@ export default function TaskCard(
         priority: string,
         status: 'completed' | 'inProgress' | 'blocked'
     }) {
-    // const { deleteTodo, updateStatus } = useCreateTask();
-
+    description = description || "";
     const borderColor = priority === "high" ? "border-l-red-500" : priority === "medium" ? "border-l-yellow-500" : priority === "low" ? "border-l-green-500" : "black";
 
-    console.log(id)
     return (
         <Card className={`w-full h-fit flex flex-row justify-between items-center gap-4 p-3 border-l-4 ${borderColor}`}>
             <div className='w-fit flex flex-row justify-start items-center gap-4'>
@@ -34,19 +31,9 @@ export default function TaskCard(
                     {description ? <CardDescription className="flex-wrap">{description}</CardDescription> : null}
                 </div>
             </div>
-            <div className="w-fit flex gap-2 p-0">
-                <DropdownMenu>
-                    <DropdownMenuTrigger className='outline-none'><EllipsisVertical /></DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                        <DropdownMenuItem onClick={() => {
-                            console.log('testing taskCard')
-                        }}>Edit</DropdownMenuItem>
-                        <DropdownMenuItem>Favorite</DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                            <DeleteTaskAlertDialog taskId={id}></DeleteTaskAlertDialog>
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+            <div className="w-fit flex gap-1 p-0">
+                <EditTaskDialog taskId={id} name={name} description={description} priority={priority} ></EditTaskDialog>
+                <DeleteTaskAlertDialog taskId={id}></DeleteTaskAlertDialog>
             </div>
         </Card>
     )
