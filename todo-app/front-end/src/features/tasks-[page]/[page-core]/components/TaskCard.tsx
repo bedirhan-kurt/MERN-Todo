@@ -14,7 +14,7 @@ export default function TaskCard(
         id: string,
         name: string,
         description?: string,
-        priority: string,
+        priority: 'high' | 'medium' | 'low',
         status: 'completed' | 'inProgress' | 'blocked'
     }) {
     description = description || "";

@@ -2,23 +2,25 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../shared/
 import { Separator } from "../shared/components/ui/separator.tsx";
 import TasksListContent from "../features/tasks-[page]/[page-core]/components/TasksListContent.tsx";
 import CreateTaskDialog from "../features/tasks-[page]/create-task-[feat]/components/CreateTaskDialog.tsx";
-
+import { TaskProvider } from "../features/tasks-[page]/[page-core]/context/TasksContext.tsx";
 
 export default function TasksPage() {
     return (
         <div className="w-full h-full flex flex-col items-center justify-center gap-4 p-4">
-            <Card className='w-2/7 h-2/3'>
-                <CardHeader>
-                    <CardTitle className='scroll-m-20 text-xl font-semibold tracking-tight'>Tasks</CardTitle>
-                    <Separator className='mt-1'></Separator>
-                </CardHeader>
-                <CardContent className='w-full h-full flex items-center justify-center'>
-                    <TasksListContent></TasksListContent>
-                </CardContent>
-                <CardFooter>
-                    <CreateTaskDialog></CreateTaskDialog>
-                </CardFooter>
-            </Card>
+            <TaskProvider>
+                <Card className='w-2/7 h-2/3'>
+                    <CardHeader>
+                        <CardTitle className='scroll-m-20 text-xl font-semibold tracking-tight'>Tasks</CardTitle>
+                        <Separator className='mt-1'></Separator>
+                    </CardHeader>
+                    <CardContent className='w-full h-full flex items-center justify-center'>
+                        <TasksListContent></TasksListContent>
+                    </CardContent>
+                    <CardFooter>
+                        <CreateTaskDialog></CreateTaskDialog>
+                    </CardFooter>
+                </Card>
+            </TaskProvider>
         </div>
     );
 }

@@ -1,14 +1,8 @@
 import api from "../../../../shared/api/axios";
-
-interface Todo {
-    name: string;
-    description?: string;
-    priority: 'low' | 'medium' | 'high';
-    status: 'inProgress';
-}
+import { Task } from "../../[page-core]/utils/TaskType";
 
 export default function useCreateTask() {
-    const createTask = async (taskData: Todo, userId: string, token: string) => {
+    const createTask = async (taskData: Task, userId: string, token: string) => {
         try {
             await api.post('/tasks', { userId, ...taskData }, {
                 headers: {
@@ -16,7 +10,7 @@ export default function useCreateTask() {
                     'Content-Type': 'application/json'
                 }
             })
-                .then((res) => console.log(res))
+                .then((res) => {console.log(res)})
                 .catch((err) => console.error(err));
         } catch (error) {
             console.error("Error creating task:", error);

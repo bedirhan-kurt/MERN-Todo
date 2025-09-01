@@ -18,7 +18,7 @@ export default function CreateTaskButton({form, formSchema, closeDialog}: {form:
 
             const token = await getAccessTokenSilently();
 
-            createTask({ ...values, status: 'inProgress' }, user?.sub, token);
+            createTask({ ...values, status: 'inProgress' }, user?.sub, token)
 
             closeDialog();
         } catch (error) {

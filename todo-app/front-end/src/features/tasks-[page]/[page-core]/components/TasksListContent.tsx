@@ -3,12 +3,14 @@ import { useAuth0 } from '@auth0/auth0-react';
 import useGetAllTasksOnce from '../../get-tasks-[feat]/hooks/useGetAllTasksOnce';
 import TasksElements from '../../get-tasks-[feat]/components/TasksElements';
 import NoTasks from './NoTasks';
+import { useTasks } from "../context/TasksContext";
 
 export default function TasksListContent() {
     const { getAccessTokenSilently } = useAuth0();
     const { getAllTasksOnce } = useGetAllTasksOnce();
 
-    const [tasks, setTasks] = useState<any[]>([]);
+
+    const {tasks, setTasks} = useTasks()
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
 
