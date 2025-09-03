@@ -3,7 +3,7 @@ import useCreateTask from "../hooks/useCreateTask";
 import {
     toast
 } from "sonner"
-import { Button } from "../../../../shared/components/ui/button.tsx";
+import { Button } from "@/shared/components/ui/button";
 import { z } from "zod";
 
 export default function CreateTaskButton({form, formSchema, closeDialog}: {form: any, formSchema: any, closeDialog: () => void}) {

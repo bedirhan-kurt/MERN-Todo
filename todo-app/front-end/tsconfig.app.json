@@ -16,12 +16,14 @@
     "jsx": "react-jsx",
 
     /* Paths */
-    "baseUrl": "..",
+    "baseUrl": ".",
     "paths": {
       "@/*": [
         "./src/*"
       ]
     },
+
+
 
     /* Linting */
     "strict": true,

@@ -1,15 +1,15 @@
 "use client"
-import { Input } from "../../../../shared/components/ui/input.tsx";
-import { Button } from "../../../../shared/components/ui/button.tsx";
+import { Input } from "@/shared/components/ui/input";
+import { Button } from "@/shared/components/ui/button";
 import {
     Dialog, DialogClose,
     DialogContent, DialogDescription,
     DialogFooter,
     DialogHeader, DialogTitle,
     DialogTrigger
-} from "../../../../shared/components/ui/dialog.tsx";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../../../shared/components/ui/form.tsx";
-import { Tabs, TabsList, TabsTrigger } from "../../../../shared/components/ui/tabs.tsx";
+} from "@/shared/components/ui/dialog";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/shared/components/ui/form";
+import { Tabs, TabsList, TabsTrigger } from "@/shared/components/ui/tabs";
 import CreateTaskButton from "./CreateTaskButton";
 import { useState } from "react";
 import { createAndEditFormSchema } from "../../[page-core]/utils/formSchemas.ts";

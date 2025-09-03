@@ -1,9 +1,9 @@
-import {Button} from "../../../../shared/components/ui/button.tsx";
-import {Label} from "../../../../shared/components/ui/label.tsx";
-import {Input} from "../../../../shared/components/ui/input.tsx";
+import {Button} from "@/shared/components/ui/button";
+import {Label} from "@/shared/components/ui/label";
+import {Input} from "@/shared/components/ui/input";
 import * as React from "react";
-import {cn} from "../../../../shared/lib/utils.ts";
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "../../../../shared/components/ui/card.tsx";
+import {cn} from "@/shared/lib/utils";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/shared/components/ui/card";
 import {Github} from "lucide-react";
 
 export function SignInForm({

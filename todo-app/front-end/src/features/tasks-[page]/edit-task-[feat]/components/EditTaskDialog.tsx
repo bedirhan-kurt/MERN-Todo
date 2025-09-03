@@ -4,17 +4,17 @@ import {
     zodResolver
 } from "@hookform/resolvers/zod"
 import * as z from "zod"
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "../../../../shared/components/ui/form"
-import {Input} from "../../../../shared/components/ui/input.tsx";
-import {Button} from "../../../../shared/components/ui/button.tsx";
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/shared/components/ui/form"
+import {Input} from "@/shared/components/ui/input";
+import {Button} from "@/shared/components/ui/button";
 import {
     Dialog, DialogClose,
     DialogContent, DialogDescription,
     DialogFooter,
     DialogHeader, DialogTitle,
     DialogTrigger
-} from "../../../../shared/components/ui/dialog.tsx";
-import {Tabs, TabsList, TabsTrigger} from "../../../../shared/components/ui/tabs";
+} from "@/shared/components/ui/dialog";
+import {Tabs, TabsList, TabsTrigger} from "@/shared/components/ui/tabs";
 import SaveChangesButton from "./SaveChangesButton.tsx"
 import { Pencil } from "lucide-react"
 import { useState } from "react"

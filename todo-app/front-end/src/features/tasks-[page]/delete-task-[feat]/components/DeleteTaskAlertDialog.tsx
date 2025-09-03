@@ -4,8 +4,8 @@ import { AlertDialog, AlertDialogTrigger, AlertDialogContent,
     AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogCancel,
-    AlertDialogAction, } from "../../../../shared/components/ui/alert-dialog";
-import {Button} from "../../../../shared/components/ui/button";
+    AlertDialogAction, } from "@/shared/components/ui/alert-dialog";
+import {Button} from "@/shared/components/ui/button";
 import { Trash } from "lucide-react";
 import DeleteTaskButton from "./DeleteTaskButton";
 import { useState } from "react";

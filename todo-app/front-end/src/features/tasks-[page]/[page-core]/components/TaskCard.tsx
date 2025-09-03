@@ -1,4 +1,4 @@
-import { Card, CardTitle, CardDescription } from "../../../../shared/components/ui/card";
+import { Card, CardTitle, CardDescription } from "@/shared/components/ui/card";
 import StatusSelect from "../../update-task-status-[feat]/components/StatusSelect";
 import DeleteTaskAlertDialog from "../../delete-task-[feat]/components/DeleteTaskAlertDialog";
 import { EditTaskDialog } from "../../edit-task-[feat]/components/EditTaskDialog";

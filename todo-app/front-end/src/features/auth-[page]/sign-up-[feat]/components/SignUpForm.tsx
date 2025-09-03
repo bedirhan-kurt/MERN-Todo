@@ -1,9 +1,9 @@
-import { Button } from "../../../../shared/components/ui/button.tsx";
-import { Label } from "../../../../shared/components/ui/label.tsx";
-import { Input } from "../../../../shared/components/ui/input.tsx";
+import { Button } from "@/shared/components/ui/button";
+import { Label } from "@/shared/components/ui/label";
+import { Input } from "@/shared/components/ui/input";
 import * as React from "react";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../../../shared/components/ui/card.tsx";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/shared/components/ui/card";
 export function SignUpForm({
     className,
     ...props

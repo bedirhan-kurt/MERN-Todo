@@ -3,7 +3,7 @@ import useEditTask from "../hooks/useEditTask";
 import {
     toast
 } from "sonner"
-import { Button } from "../../../../shared/components/ui/button.tsx";
+import { Button } from "@/shared/components/ui/button";
 import { z } from "zod";
 
 export default function SaveChangesButton({form, formSchema, taskId, closeDialog}: {form: any, formSchema: any, taskId: string, closeDialog: () => void}) {
